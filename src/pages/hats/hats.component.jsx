@@ -2,20 +2,17 @@ import React from "react";
 
 import DirectoryMenu from "../../components/directory-menu/directory-menu.component";
 
-import "./homepage.style.scss";
+import "./hats.style.scss";
 
-const HomePage = () => {
-
+const HatsPage = () => {
     return (
-        <div className="homepage">
+        <div className="hats">
             <div className="container">
-                <h1>Home Page</h1>
+                <h1>Hats Page</h1>
                 <DirectoryMenu />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default HomePage;
-
-
+export default HatsPage;
