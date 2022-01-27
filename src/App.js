@@ -5,6 +5,7 @@ import "./App.scss";
 
 import HomePage from "./pages/homepage/homepage.component";
 import SignInAndSignUp from "./pages/sign-in/sign-in-and-sign-up.component";
+import React from "react";
 import ShopPage from "./pages/shop/shop.component";
 import HatsPage from "./pages/hats/hats.component";
 import NotFoundPage from "./pages/not-found/not-found.component";
