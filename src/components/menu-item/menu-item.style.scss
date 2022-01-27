@@ -2,19 +2,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     position: relative;
-    margin: 0 7.5px 15px;
+    // margin: 0 7.5px 15px;
+    border: 10px #FFFFFF solid;
     min-width: 30%;
     height: 240px;
 
-    &:first-child {
-        margin-right: 7.5px;
-    }
+    // &:first-child {
+    //     margin-right: 7.5px;
+    // }
 
-    &:last-child {
-        margin-left: 7.5px;
-    }
+    // &:last-child {
+    //     margin-left: 7.5px;
+    // }
 
     .overlay {
         position: absolute;
