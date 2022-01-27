@@ -1,0 +1,38 @@
+.sign-in {
+    .group-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .group-content {
+        padding: 0 30px;
+        flex: 1 0 auto;
+        width: 50%;
+    }
+
+    .form {
+        fieldset {
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        input {
+            padding: 10px 15px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px 15px;
+        }
+
+        p {
+            width: 100%;
+        }
+    }
+}
