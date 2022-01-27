@@ -1,9 +1,7 @@
-import { Switch, Route, IndexRoute } from "react-router-dom";
+import { Fragment } from "react";
+import { Switch, Route } from "react-router-dom";
 
 import "./App.scss";
-
-import Header from "./components/header/header.component";
-import Footer from "./components/footer/footer.component";
 
 import HomePage from "./pages/homepage/homepage.component";
 import SignInAndSignUp from "./pages/sign-in/sign-in-and-sign-up.component";
@@ -13,23 +11,16 @@ import NotFoundPage from "./pages/not-found/not-found.component";
 
 function App() {
     return (
-        <div className="site-view">
-            <Header />
-
-            <main className="site-main">
-                <Switch>
-                    <Route exact path="/" component={HomePage} />
-                    <Route path="/sign-in" component={SignInAndSignUp} />
-                    <Route path="/shop" component={ShopPage} />
-                    <Route path="/hats" component={HatsPage} />
-                    <Route path="/hats" component={HatsPage} />
-                    <Route path="*" component={NotFoundPage} />
-                </Switch>
-            </main>
-
-            <Footer />
-
-        </div>
+        <Fragment>
+            <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route path="/sign-in" component={SignInAndSignUp} />
+                <Route path="/shop" component={ShopPage} />
+                <Route path="/hats" component={HatsPage} />
+                <Route path="/hats" component={HatsPage} />
+                <Route path="*" component={NotFoundPage} />
+            </Switch>
+        </Fragment>
     );
 }
 
