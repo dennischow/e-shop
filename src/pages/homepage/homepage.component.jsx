@@ -6,7 +6,6 @@ import DirectoryMenu from "../../components/directory-menu/directory-menu.compon
 import "./homepage.style.scss";
 
 const HomePage = () => {
-
     return (
         <Layout hasHeader={true} hasFooter={true}>
             <div className="homepage">
@@ -16,9 +15,7 @@ const HomePage = () => {
                 </div>
             </div>
         </Layout>
-    )
-}
+    );
+};
 
 export default HomePage;
-
-

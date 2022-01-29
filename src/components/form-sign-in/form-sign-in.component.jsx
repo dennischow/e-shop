@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { signInWithGoogle } from "../../firebase/firebase.utils";
+
 import "./form-sign-in.style.scss";
 
 const FormSignIn = () => {
@@ -47,6 +49,7 @@ const FormSignIn = () => {
                     </p>
                     <p>
                         <button type="submit">Sign-In</button>
+                        <button type="button" onClick={signInWithGoogle}>Sign-In with Google</button>
                     </p>
                 </fieldset>
             </form>

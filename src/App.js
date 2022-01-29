@@ -1,18 +1,47 @@
-import { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import "./App.scss";
 
 import HomePage from "./pages/homepage/homepage.component";
 import SignInAndSignUp from "./pages/sign-in/sign-in-and-sign-up.component";
-import React from "react";
 import ShopPage from "./pages/shop/shop.component";
 import HatsPage from "./pages/hats/hats.component";
 import NotFoundPage from "./pages/not-found/not-found.component";
 
+import { auth } from "./firebase/firebase.utils";
+
 function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        // Source: https://www.titanwolf.org/Network/q/9c8d205b-9e6f-4c36-896c-9cf64954c7cb/y
+        const unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+            if (user) {
+                setIsLoggedIn(true);
+                console.log("Logged in: ", true);
+            } else {
+                setIsLoggedIn(false);
+                console.log("Logged in: ", false);
+            }
+            setCurrentUser(user);
+        });
+
+        return () => {
+            unsubscribeFromAuth();
+        };
+    }, []);
+
     return (
         <Fragment>
+            {isLoggedIn && (
+                <p>
+                    <button type="button" onClick={() => auth.signOut()}>
+                        Sign-Out
+                    </button>
+                </p>
+            )}
             <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/sign-in" component={SignInAndSignUp} />
