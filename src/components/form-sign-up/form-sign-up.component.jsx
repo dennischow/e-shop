@@ -29,7 +29,7 @@ const FormSignUp = () => {
     };
 
     useEffect(() => {
-        console.log(`formData: `, formData);
+        // console.log(`formData: `, formData);
     });
 
     return (
