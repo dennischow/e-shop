@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, Timestamp } from "firebase/firestore/lite";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
@@ -11,6 +11,7 @@ const firebaseConfig = {
     appId: "1:564790311309:web:56334301658c2b4c4065c4",
     measurementId: "G-14BKWRG5DH",
 };
+
 export const firebaseApp = initializeApp(firebaseConfig);
 export const db = getFirestore(firebaseApp);
 export const auth = getAuth();
@@ -37,3 +38,37 @@ export const signInWithGoogle = () =>
             const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
         });
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if (!userAuth) return;
+
+    const userId = userAuth.uid;
+
+    // The user in collection of users
+    // Source: https://firebase.google.com/docs/firestore/manage-data/add-data
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+        const docData = {
+            displayName,
+            email,
+            createdAt,
+            ...additionalData,
+        };
+        console.log("Document data:", docSnap.data());
+
+        try {
+            await setDoc(doc(db, "users", userId), docData);
+            console.log("No such document! Creating a new document in users collection in firebase db...");
+        } catch (error) {
+            console.log("error creating user", error.message);
+        }
+    } else {
+        console.log("Existing user logged in");
+    }
+
+    return docRef;
+};

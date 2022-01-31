@@ -10,7 +10,7 @@ import HatsPage from "./pages/hats/hats.component";
 import NotFoundPage from "./pages/not-found/not-found.component";
 
 import { AppContext } from "./context/app-context";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,10 +18,11 @@ function App() {
 
     useEffect(() => {
         // Source: https://www.titanwolf.org/Network/q/9c8d205b-9e6f-4c36-896c-9cf64954c7cb/y
-        const unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+        const unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
             if (user) {
                 setIsLoggedIn(true);
                 console.log("Logged in: ", true);
+                createUserProfileDocument(user);
             } else {
                 setIsLoggedIn(false);
                 console.log("Logged in: ", false);

@@ -48,8 +48,12 @@ const FormSignIn = () => {
                         <input id="password" name="password" type="password" value={formData.password} onChange={handleChange} required />
                     </p>
                     <p>
-                        <button type="submit">Sign-In</button>
-                        <button type="button" onClick={signInWithGoogle}>Sign-In with Google</button>
+                        <button className="btn-sign-in btn-sign-in--default" type="submit">
+                            Sign-In
+                        </button>
+                        <button className="btn-sign-in btn-sign-in--google" type="button" onClick={signInWithGoogle}>
+                            Sign-In with Google
+                        </button>
                     </p>
                 </fieldset>
             </form>
