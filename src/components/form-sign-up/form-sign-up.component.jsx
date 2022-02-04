@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { auth, createUserProfileDocument, signUpWithEmail } from "../../firebase/firebase.utils";
 
 import "./form-sign-up.style.scss";
 
 const FormSignUp = () => {
     const initialFormData = {
+        displayName: "",
         email: "",
         password: "",
+        confirmPassword: "",
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -21,11 +24,31 @@ const FormSignUp = () => {
         });
     };
 
-    const handleSubmission = (event) => {
+    const handleSubmission = async (event) => {
         event.preventDefault();
-        setFormData(initialFormData);
-        console.log(`Submitted: `, formData);
-        console.log(`handleSubmission: `, event.target);
+
+        const { displayName, email, password, confirmPassword } = formData;
+
+        if (password !== confirmPassword) {
+            alert("password doesnt match");
+            return;
+        }
+
+        // https://firebase.google.com/docs/auth/web/start
+        try {
+            signUpWithEmail(auth, email, password)
+            .then((userCredential) => {
+                const { user } = userCredential;
+                createUserProfileDocument(user, { displayName });
+                setFormData(initialFormData);
+                console.log(`Submitted: `, formData);
+                console.log(`handleSubmission: `, event.target);
+            });
+        } catch (error) {
+            console.error(error.code);
+            console.error(error.message);
+        }
+
     };
 
     useEffect(() => {
@@ -34,12 +57,13 @@ const FormSignUp = () => {
 
     return (
         <div className="form-sign-up">
-            <h1>Sign-Up</h1>
+            <h1>I do not have an account</h1>
+            <p>Sign-up with your email and password</p>
             <form onSubmit={handleSubmission}>
                 <fieldset>
                     <p>
-                        <label htmlFor="name">Name</label>
-                        <input id="name" name="name" type="text" value={formData.email} onChange={handleChange} required />
+                        <label htmlFor="displayName">Name</label>
+                        <input id="displayName" name="displayName" type="text" value={formData.displayName} onChange={handleChange} required />
                     </p>
                     <p>
                         <label htmlFor="email">Email</label>
@@ -51,10 +75,10 @@ const FormSignUp = () => {
                     </p>
                     <p>
                         <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input id="confirmPassword" name="confirmPassword" type="password" value={formData.password} onChange={handleChange} required />
+                        <input id="confirmPassword" name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} required />
                     </p>
                     <p>
-                        <button type="submit">Sign-In</button>
+                        <button type="submit">Sign-Up</button>
                     </p>
                 </fieldset>
             </form>
