@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import { auth, signInWithEmail, signInWithGoogle } from "../../firebase/firebase.utils";
 
 import "./form-sign-in.style.scss";
 
@@ -23,11 +23,23 @@ const FormSignIn = () => {
         });
     };
 
-    const handleSubmission = (event) => {
+    const handleSubmission = async (event) => {
         event.preventDefault();
-        setFormData(initialFormData);
-        console.log(`Submitted: `, formData);
-        console.log(`handleSubmission: `, event.target);
+
+        const { email, password } = formData;
+
+        try {
+            signInWithEmail(auth, email, password).then((userCredential) => {
+                const { user } = userCredential.user;
+                setFormData(initialFormData);
+                console.log(`user: `, user);
+                console.log(`Submitted: `, formData);
+                console.log(`handleSubmission: `, event.target);
+            });
+        } catch (error) {
+            console.error(error.code);
+            console.error(error.message);
+        }
     };
 
     useEffect(() => {
@@ -37,6 +49,7 @@ const FormSignIn = () => {
     return (
         <div className="form-sign-in">
             <h1>Sign-In</h1>
+            <p>Existing user return</p>
             <form onSubmit={handleSubmission}>
                 <fieldset>
                     <p>

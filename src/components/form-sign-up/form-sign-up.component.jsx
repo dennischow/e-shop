@@ -36,11 +36,11 @@ const FormSignUp = () => {
 
         // https://firebase.google.com/docs/auth/web/start
         try {
-            signUpWithEmail(auth, email, password)
-            .then((userCredential) => {
+            signUpWithEmail(auth, email, password).then((userCredential) => {
                 const { user } = userCredential;
                 createUserProfileDocument(user, { displayName });
                 setFormData(initialFormData);
+                console.log(`user: `, user);
                 console.log(`Submitted: `, formData);
                 console.log(`handleSubmission: `, event.target);
             });
@@ -48,7 +48,6 @@ const FormSignUp = () => {
             console.error(error.code);
             console.error(error.message);
         }
-
     };
 
     useEffect(() => {
@@ -58,7 +57,7 @@ const FormSignUp = () => {
     return (
         <div className="form-sign-up">
             <h1>I do not have an account</h1>
-            <p>Sign-up with your email and password</p>
+            <p>Sign-up with us</p>
             <form onSubmit={handleSubmission}>
                 <fieldset>
                     <p>
