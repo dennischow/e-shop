@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
 
 import "./App.scss";
 
@@ -10,21 +11,23 @@ import HatsPage from "./pages/hats/hats.component";
 import NotFoundPage from "./pages/not-found/not-found.component";
 
 import { AppContext } from "./context/app-context";
+import { setCurrentUser } from "./redux/user/user.actions";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
-function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
+function App({ setCurrentUser }) {
+
 
     useEffect(() => {
         // Source: https://www.titanwolf.org/Network/q/9c8d205b-9e6f-4c36-896c-9cf64954c7cb/y
         const unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
             if (user) {
-                setIsLoggedIn(true);
+                // setIsLoggedIn(true);
+                // setCurrentUser(user);
                 console.log("Logged in: ", true);
                 createUserProfileDocument(user);
             } else {
-                setIsLoggedIn(false);
+                // setIsLoggedIn(false);
+                // setCurrentUser(null);
                 console.log("Logged in: ", false);
             }
             setCurrentUser(user);
@@ -37,18 +40,19 @@ function App() {
 
     return (
         <Fragment>
-            <AppContext.Provider value={{ isLoggedIn, currentUser }}>
-                <Switch>
-                    <Route exact path="/" component={HomePage} />
-                    <Route path="/sign-in" component={SignInAndSignUp} />
-                    <Route path="/shop" component={ShopPage} />
-                    <Route path="/hats" component={HatsPage} />
-                    <Route path="/hats" component={HatsPage} />
-                    <Route path="*" component={NotFoundPage} />
-                </Switch>
-            </AppContext.Provider>
+            <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route path="/sign-in" component={SignInAndSignUp} />
+                <Route path="/shop" component={ShopPage} />
+                <Route path="/hats" component={HatsPage} />
+                <Route path="*" component={NotFoundPage} />
+            </Switch>
         </Fragment>
     );
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(App);
