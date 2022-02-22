@@ -7,10 +7,11 @@ import { auth } from "../../firebase/firebase.utils";
 
 import { ReactComponent as Logo } from "../../assets/images/crown.svg";
 import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
 import "./header.style.scss";
 
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, cartHidden }) => {
     return (
         <header className="site-header">
             <div className="container">
@@ -39,6 +40,7 @@ const Header = ({ currentUser }) => {
                             Sign-In
                         </Link>
                     )}
+                    {cartHidden ? null : <CartDropdown />}
                 </nav>
             </div>
         </header>
@@ -47,6 +49,7 @@ const Header = ({ currentUser }) => {
 
 const mapStateToProps = (state) => ({
     currentUser: state.user.currentUser,
+    cartHidden: state.cart.hidden,
 });
 
 export default connect(mapStateToProps)(Header);
