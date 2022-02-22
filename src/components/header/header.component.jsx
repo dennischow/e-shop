@@ -6,6 +6,7 @@ import { AppContext } from "../../context/app-context";
 import { auth } from "../../firebase/firebase.utils";
 
 import { ReactComponent as Logo } from "../../assets/images/crown.svg";
+import CartIcon from "../cart-icon/cart-icon.component";
 
 import "./header.style.scss";
 
@@ -31,6 +32,7 @@ const Header = ({ currentUser }) => {
                             <a className="options-link options-link--admission" onClick={() => auth.signOut()}>
                                 Sign-Out
                             </a>
+                            <CartIcon />
                         </Fragment>
                     ) : (
                         <Link className="options-link options-link--admission" to="/sign-in">
