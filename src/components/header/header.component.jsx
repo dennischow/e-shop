@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -16,19 +16,24 @@ const Header = ({ currentUser }) => {
                 <Link className="branding" to="/">
                     <Logo className="branding-logo" />
                 </Link>
-                <nav className="options">
+                <nav className="options options--pages">
                     <Link className="options-link" to="/">
                         Home
                     </Link>
                     <Link className="options-link" to="/shop">
                         Shop
                     </Link>
+                </nav>
+                <nav className="options options--controls">
                     {currentUser ? (
-                        <a className="options-link" onClick={() => auth.signOut()}>
-                            Sign-Out
-                        </a>
+                        <Fragment>
+                            <a className="options-link">Hello {currentUser.displayName}</a>
+                            <a className="options-link options-link--admission" onClick={() => auth.signOut()}>
+                                Sign-Out
+                            </a>
+                        </Fragment>
                     ) : (
-                        <Link className="options-link" to="/sign-in">
+                        <Link className="options-link options-link--admission" to="/sign-in">
                             Sign-In
                         </Link>
                     )}
